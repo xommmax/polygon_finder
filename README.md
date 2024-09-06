@@ -2,9 +2,7 @@ This library helps you to find the polygons from defined set of lines. By polygo
 
 It can be useful for functionalities like below:
 
-<video width="200" height="300" controls>
-  <source src="assets/polygons_example.mp4" type="video/mp4">
-</video>
+<video src="https://github.com/user-attachments/assets/6dc93f91-d179-4abf-9335-900fc6bcd929" />
 
 ## Getting started
 

@@ -2,7 +2,7 @@ This library helps you to find the polygons from defined set of lines. By polygo
 
 It can be useful for functionalities like below:
 
-![](assets/polygons_example.gif)
+<img src="assets/polygons_example.gif" alt="Logo" width="30%"/>
 
 ## Getting started
 

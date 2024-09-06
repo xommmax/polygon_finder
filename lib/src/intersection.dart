@@ -23,15 +23,17 @@ class Intersection {
     a = line1.p1.y - line2.p1.y;
     b = line1.p1.x - line2.p1.x;
 
-    numerator1 = ((line2.p2.x - line2.p1.x) * a) - ((line2.p2.y - line2.p1.y) * b);
-    numerator2 = ((line1.p2.x - line1.p1.x) * a) - ((line1.p2.y - line1.p1.y) * b);
+    numerator1 =
+        ((line2.p2.x - line2.p1.x) * a) - ((line2.p2.y - line2.p1.y) * b);
+    numerator2 =
+        ((line1.p2.x - line1.p1.x) * a) - ((line1.p2.y - line1.p1.y) * b);
 
     a = numerator1 / denominator;
     b = numerator2 / denominator;
 
     // If we cast these lines infinitely in both directions, they intersect here:
-    intersectionPoint = Point(
-        line1.p1.x + (a * (line1.p2.x - line1.p1.x)), line1.p1.y + (a * (line1.p2.y - line1.p1.y)));
+    intersectionPoint = Point(line1.p1.x + (a * (line1.p2.x - line1.p1.x)),
+        line1.p1.y + (a * (line1.p2.y - line1.p1.y)));
 
     // If line1 is a segment and line2 is infinite, they intersect if:
     if (a >= 0 && a <= 1 && b >= 0 && b <= 1) {

@@ -40,7 +40,8 @@ class Graph {
 
   Set<Node> getConnectedNodes(Node node) {
     List<Connection> myConnections = connections
-        .where((connection) => connection.node1 == node || connection.node2 == node)
+        .where((connection) =>
+            connection.node1 == node || connection.node2 == node)
         .toList();
     Set<Node> connectedNodes = {};
     for (final connection in myConnections) {
@@ -53,7 +54,8 @@ class Graph {
 
   List<Connection> getConnectionsFromNode(Node node) {
     return connections
-        .where((connection) => connection.node1 == node || connection.node2 == node)
+        .where((connection) =>
+            connection.node1 == node || connection.node2 == node)
         .toList();
   }
 
@@ -85,8 +87,10 @@ class Graph {
       return false;
     }
 
-    List<Node> node1Matches = nodes.where((node) => node.point == node1.point).toList();
-    List<Node> node2Matches = nodes.where((node) => node.point == node2.point).toList();
+    List<Node> node1Matches =
+        nodes.where((node) => node.point == node1.point).toList();
+    List<Node> node2Matches =
+        nodes.where((node) => node.point == node2.point).toList();
 
     if (node1Matches.length > 1) {
       print("Too many matches for node 1. length = ${node1Matches.length}");
@@ -124,7 +128,8 @@ class Graph {
   }
 
   void addNode(Node newNode) {
-    List<Node> duplicateNodes = nodes.where((node) => newNode.point == node.point).toList();
+    List<Node> duplicateNodes =
+        nodes.where((node) => newNode.point == node.point).toList();
 
     if (duplicateNodes.length > 1) {
       print("TODO: HANDLE THIS. THIS SHOULD NOT BE HAPPENING");
@@ -143,9 +148,10 @@ class Graph {
       List<int> path = [adjacencyListSourceIndex];
       int startingNeighborIndex = neighbors[i];
       List<List<int>> tmpAdjacencyList = List.from(adjacencyList);
-      tmpAdjacencyList[startingNeighborIndex] = tmpAdjacencyList[startingNeighborIndex]
-          .where((nodeIndex) => nodeIndex != adjacencyListSourceIndex)
-          .toList();
+      tmpAdjacencyList[startingNeighborIndex] =
+          tmpAdjacencyList[startingNeighborIndex]
+              .where((nodeIndex) => nodeIndex != adjacencyListSourceIndex)
+              .toList();
       path.addAll(Graph.findShortestPath(
           tmpAdjacencyList, startingNeighborIndex, adjacencyListSourceIndex));
       paths.add(path);
@@ -200,7 +206,8 @@ class Graph {
       }
     }
 
-    List<List<int>> leftoverAdjacencyList = List.generate(nodes.length, (index) => []);
+    List<List<int>> leftoverAdjacencyList =
+        List.generate(nodes.length, (index) => []);
     for (final edge in edgesOnlyUsedOnce) {
       leftoverAdjacencyList[edge[0]].add(edge[1]);
       leftoverAdjacencyList[edge[1]].add(edge[0]);
@@ -215,8 +222,11 @@ class Graph {
           int startingNeighborIndex = neighbors[j];
           List<List<int>> tmpAdjacencyList = List.from(leftoverAdjacencyList);
           tmpAdjacencyList[startingNeighborIndex] =
-              tmpAdjacencyList[startingNeighborIndex].where((nodeIndex) => nodeIndex != i).toList();
-          path.addAll(Graph.findShortestPath(tmpAdjacencyList, startingNeighborIndex, i));
+              tmpAdjacencyList[startingNeighborIndex]
+                  .where((nodeIndex) => nodeIndex != i)
+                  .toList();
+          path.addAll(Graph.findShortestPath(
+              tmpAdjacencyList, startingNeighborIndex, i));
           extraPaths.add(path);
         }
       }
@@ -225,7 +235,8 @@ class Graph {
     List<List<int>> leftoverCycles = [];
     for (int i = 0; i < extraPaths.length; i++) {
       if (leftoverCycles
-          .where((cycle) => Graph.doArraysContainSameElements(cycle, extraPaths[i]))
+          .where((cycle) =>
+              Graph.doArraysContainSameElements(cycle, extraPaths[i]))
           .isEmpty) {
         leftoverCycles.add(extraPaths[i]);
       }
@@ -261,7 +272,8 @@ class Graph {
     return true;
   }
 
-  static List<int> findShortestPath(List<List<int>> adjacencyList, int source, int target) {
+  static List<int> findShortestPath(
+      List<List<int>> adjacencyList, int source, int target) {
     if (source == target) {
       print("SOURCE AND TARGET ARE SAME");
       return [target];
@@ -307,7 +319,8 @@ class Node {
   Node(this.point);
 
   @override
-  bool operator ==(Object other) => other is Node && point == other.point && id == other.id;
+  bool operator ==(Object other) =>
+      other is Node && point == other.point && id == other.id;
 
   @override
   int get hashCode => point.hashCode ^ id.hashCode;

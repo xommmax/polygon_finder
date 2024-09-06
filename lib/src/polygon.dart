@@ -22,7 +22,8 @@ class Polygon {
 
   @override
   operator ==(other) =>
-      other is Polygon && const UnorderedIterableEquality().equals(points, other.points);
+      other is Polygon &&
+      const UnorderedIterableEquality().equals(points, other.points);
 
   @override
   int get hashCode => points.hashCode;

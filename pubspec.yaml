@@ -1,6 +1,6 @@
 name: polygon_finder
 description: Library to help you to find the polygons from defined set of lines
-version: 1.0.0
+version: 1.0.1
 repository: https://github.com/xommmax/polygon_finder
 
 environment:

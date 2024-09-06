@@ -1,25 +1,24 @@
-import 'dart:math' show sqrt, pow;
+import 'dart:math' show Point, pow, sqrt;
+
+import 'package:polygon_finder/src/polygon.dart';
 
 import 'graph.dart';
 import 'intersection.dart';
-import 'line_segment.dart';
-import 'point.dart';
-import 'polygon.dart';
+import 'line.dart';
 
 class PolygonFinder {
-  static Graph buildGraphFromSegments(List<LineSegment> segments) {
+  static Graph buildGraphFromSegments(List<Line> segments) {
     Graph graph = Graph();
 
     // First we find all of the intersections between all of the segments
     List<Intersection> intersections = findAllIntersectionsInSegments(segments);
 
     // Then we filter for the segments that have more than one intersection
-    List<LineSegment> connectedSegments = [];
+    List<Line> connectedSegments = [];
     List<Intersection> connectedIntersections = [];
     for (final segment in segments) {
       List<Intersection> intersectionsOnSegment = intersections
-          .where((intersection) =>
-              intersection.line1 == segment || intersection.line2 == segment)
+          .where((intersection) => intersection.line1 == segment || intersection.line2 == segment)
           .toList();
 
       if (intersectionsOnSegment.length > 1) {
@@ -34,13 +33,11 @@ class PolygonFinder {
 
     for (final segment in connectedSegments) {
       List<Intersection> intersectionsOnSegment = connectedIntersections
-          .where((intersection) =>
-              intersection.line1 == segment || intersection.line2 == segment)
+          .where((intersection) => intersection.line1 == segment || intersection.line2 == segment)
           .toList();
 
       // For each intersection on a line, find the nearest neighbor in each direction.
-      List<List<Intersection>> nearestNeighborTrios =
-          intersectionsOnSegment.map((intersection) {
+      List<List<Intersection>> nearestNeighborTrios = intersectionsOnSegment.map((intersection) {
         List<Intersection?> nearestNeighborPair = [null, null];
         List<double> minimumDistancePair = [double.infinity, double.infinity];
         List<Intersection> possibleNeighbors = intersectionsOnSegment
@@ -48,36 +45,29 @@ class PolygonFinder {
             .toList();
 
         for (final possibleNeighbor in possibleNeighbors) {
-          double distanceBetween = _dist(
-              intersection.point.x,
-              intersection.point.y,
-              possibleNeighbor.point.x,
-              possibleNeighbor.point.y);
+          double distanceBetween = _dist(intersection.point.x, intersection.point.y,
+              possibleNeighbor.point.x, possibleNeighbor.point.y);
 
           if (possibleNeighbor.point.x != intersection.point.x) {
             if (possibleNeighbor.point.x < intersection.point.x) {
-              if (nearestNeighborPair[0] == null ||
-                  distanceBetween < minimumDistancePair[0]) {
+              if (nearestNeighborPair[0] == null || distanceBetween < minimumDistancePair[0]) {
                 nearestNeighborPair[0] = possibleNeighbor;
                 minimumDistancePair[0] = distanceBetween;
               }
             } else if (possibleNeighbor.point.x > intersection.point.x) {
-              if (nearestNeighborPair[1] == null ||
-                  distanceBetween < minimumDistancePair[1]) {
+              if (nearestNeighborPair[1] == null || distanceBetween < minimumDistancePair[1]) {
                 nearestNeighborPair[1] = possibleNeighbor;
                 minimumDistancePair[1] = distanceBetween;
               }
             }
           } else if (possibleNeighbor.point.y != intersection.point.y) {
             if (possibleNeighbor.point.y < intersection.point.y) {
-              if (nearestNeighborPair[0] == null ||
-                  distanceBetween < minimumDistancePair[0]) {
+              if (nearestNeighborPair[0] == null || distanceBetween < minimumDistancePair[0]) {
                 nearestNeighborPair[0] = possibleNeighbor;
                 minimumDistancePair[0] = distanceBetween;
               }
             } else if (possibleNeighbor.point.y > intersection.point.y) {
-              if (nearestNeighborPair[1] == null ||
-                  distanceBetween < minimumDistancePair[1]) {
+              if (nearestNeighborPair[1] == null || distanceBetween < minimumDistancePair[1]) {
                 nearestNeighborPair[1] = possibleNeighbor;
                 minimumDistancePair[1] = distanceBetween;
               }
@@ -122,31 +112,30 @@ class PolygonFinder {
   static List<Polygon> polygonsFromCycles(List<List<int>> cycles, Graph graph) {
     List<Polygon> polygons = [];
     for (final List<int> cycle in cycles) {
-      List<Point> points =
-          cycle.map((int node) => graph.nodes[node].point).toList();
-      if (points.length < 3) continue;
+      List<Point<double>> points = cycle.map((int node) => graph.nodes[node].point).toList();
+      if (points.length < 3) {
+        continue;
+      }
       polygons.add(Polygon(points));
     }
     return polygons;
   }
 
-  static List<Polygon> polygonsFromSegments(List<LineSegment> segments) {
+  static List<Polygon> polygonsFromSegments(List<Line> segments) {
     Graph graph = buildGraphFromSegments(segments);
     List<List<int>> cycles = graph.findMinimumCycles();
     return polygonsFromCycles(cycles, graph);
   }
 
-  static List<Intersection> findAllIntersectionsInSegments(
-      List<LineSegment> segmentSet) {
+  static List<Intersection> findAllIntersectionsInSegments(List<Line> segmentSet) {
     List<Intersection> intersections = [];
     for (int i = 0; i < segmentSet.length; i++) {
       for (int j = i + 1; j < segmentSet.length; j++) {
-        Intersection? intersection =
-            Intersection.findIntersection(segmentSet[i], segmentSet[j]);
+        Intersection? intersection = Intersection.findIntersection(segmentSet[i], segmentSet[j]);
         if (intersection != null) {
           bool alreadyInSet = false;
           for (int k = 0; k < intersections.length; k++) {
-            if (Intersection.equals(intersections[k], intersection)) {
+            if (intersections[k] == intersection) {
               alreadyInSet = true;
             }
           }

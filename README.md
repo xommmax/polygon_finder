@@ -1,4 +1,4 @@
-This library helps you to find the polygons from defined set of lines. By polygon we mean the shape formed by straight line segments that connect to create a closed figure.
+This library helps you to find the polygons from defined set of lines. By polygon we mean the shape formed by straight line segments that connect to create a closed figure. 
 
 It can be useful for functionalities like below:
 

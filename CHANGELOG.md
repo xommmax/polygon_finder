@@ -1,3 +1,3 @@
 ## 1.0.0
 
-- Initial version.
+- Initial Polygon Finder version.

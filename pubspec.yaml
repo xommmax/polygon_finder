@@ -1,15 +1,13 @@
 name: polygon_finder
-description: A starting point for Dart libraries or applications.
+description: Library to help you to find the polygons from defined set of lines
 version: 1.0.0
-# repository: https://github.com/my_org/my_repo
+repository: https://github.com/xommmax/polygon_finder
 
 environment:
   sdk: ^3.0.5
 
-# Add regular dependencies here.
 dependencies:
   collection: ^1.18.0
-  # path: ^1.8.0
 
 dev_dependencies:
   lints: ^2.0.0

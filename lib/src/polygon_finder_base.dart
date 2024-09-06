@@ -7,6 +7,12 @@ import 'intersection.dart';
 import 'line.dart';
 
 class PolygonFinder {
+  static List<Polygon> polygonsFromSegments(List<Line> segments) {
+    Graph graph = buildGraphFromSegments(segments);
+    List<List<int>> cycles = graph.findMinimumCycles();
+    return polygonsFromCycles(cycles, graph);
+  }
+
   static Graph buildGraphFromSegments(List<Line> segments) {
     Graph graph = Graph();
 
@@ -119,12 +125,6 @@ class PolygonFinder {
       polygons.add(Polygon(points));
     }
     return polygons;
-  }
-
-  static List<Polygon> polygonsFromSegments(List<Line> segments) {
-    Graph graph = buildGraphFromSegments(segments);
-    List<List<int>> cycles = graph.findMinimumCycles();
-    return polygonsFromCycles(cycles, graph);
   }
 
   static List<Intersection> findAllIntersectionsInSegments(List<Line> segmentSet) {

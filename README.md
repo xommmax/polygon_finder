@@ -2,7 +2,7 @@ This library helps you to find the polygons from defined set of lines. By polygo
 
 It can be useful for functionalities like below:
 
-<img src="assets/polygons_example.gif" alt="Logo" width="30%"/>
+<img src="https://github.com/xommmax/polygon_finder/blob/f0d37f675f54b35d73387d949616a5b2e9bb6429/assets/polygons_example.gif" alt="Logo" width="30%"/>
 
 ## Getting started
 
@@ -51,7 +51,7 @@ I created this package for my side-project where I had to implement the custom e
 
 It looks like this (each polygon is colored in random color for better understanding).
 
-<img src="assets/screenshot1.png" alt="Logo" width="30%"/>
+<img src="https://github.com/xommmax/polygon_finder/blob/f0d37f675f54b35d73387d949616a5b2e9bb6429/assets/screenshot1.png" alt="Logo" width="30%"/>
 
 
 And later it allowed me to select polygons and set different fill types for them.
